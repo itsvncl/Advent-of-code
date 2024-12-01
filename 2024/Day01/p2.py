@@ -9,16 +9,25 @@ def solve(input_data: str) -> str:
         leftColList.append(int(splittedLine[0]))
         rightColList.append(int(splittedLine[1]))
     
-    leftColList.sort()
-    rightColList.sort()
+    cache = {}
+    sum = 0
 
-    diffSum = 0
-    for i in range(len(leftColList)):
-        diffSum = diffSum + abs(leftColList[i]- rightColList[i])
+    for leftId in leftColList:
+        if leftId in cache:
+            sum = sum + cache[leftId]
+        else:
+            partialSum = 0
+            for rightId in rightColList:
+                if rightId == leftId:
+                    partialSum = partialSum + leftId
+            
+            cache[leftId] = partialSum
+            sum = sum + partialSum
     
-    return diffSum
+    return sum 
 
 if __name__ == "__main__":
     input_data = load_input(1, InputType.MAIN)
     result = time_solution(solve, input_data)
+
     print(f"Result: {result}")
