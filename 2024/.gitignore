@@ -7,4 +7,6 @@ __pycache__/
 
 ### SECRETS ###
 input.txt
+example.txt
 .env
+puzzle
