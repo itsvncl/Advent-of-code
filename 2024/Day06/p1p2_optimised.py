@@ -73,7 +73,7 @@ def get_guard_path(lab_map, start_pos,  direction = (-1 , 0), obstacle = '#') ->
     ind = 0
     while 0 <= loc_i < bound_i and 0 <= loc_j < bound_j:
         loc_tuple = (loc_i, loc_j)  
-        if loc_tuple != start_pos and loc_tuple not in pos_set:
+        if loc_tuple not in pos_set:
             pos_set[loc_tuple] = (loc_i, loc_j, last_turn, ind, (dir_i, dir_j))
             ind += 1
 
@@ -109,7 +109,8 @@ def solve(input_data: str) -> str:
     lab_map = list(map(list, input_data.splitlines()))
     start_pos = find_start_and_build_dicts(lab_map)
     guard_paths = get_guard_path(lab_map, start_pos)
-    
+    del guard_paths[start_pos]
+
     sorted_paths = sorted(guard_paths.values(), key=lambda x: x[3])
     loops = 0
     for path in sorted_paths:
