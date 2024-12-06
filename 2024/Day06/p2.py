@@ -17,10 +17,10 @@ def is_loop(lab_map, loc_i, loc_j, bound_i, bound_j, direction, obstacle = '#'):
     loc_rotation_path = set()
     while 0 <= loc_i < bound_i and 0 <= loc_j < bound_j:        
         while look_ahead(lab_map, [loc_i + direction[0], loc_j + direction[1]]) == obstacle:
-            loc_rotation_hash_key = f"{loc_i},{loc_j};{direction[0]},{direction[1]}"
-            if loc_rotation_hash_key in loc_rotation_path: return True
+            seen_location_set = (loc_i, loc_j, direction[0], direction[1])
+            if seen_location_set in loc_rotation_path: return True
             
-            loc_rotation_path.add(loc_rotation_hash_key)
+            loc_rotation_path.add(seen_location_set)
             rotate_right(direction)
 
         loc_i += direction[0]        
