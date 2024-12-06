@@ -3,6 +3,7 @@ from typing import List
 
 def look_ahead(lab_map, pos): # I hate it, but it literally runs faster then regular bound checking
     try:
+        if(pos[0] < 0 or pos[1] < 0): return None
         return lab_map[pos[0]][pos[1]]
     except:
         return None
@@ -22,7 +23,7 @@ def simulate_guard(lab_map, start_pos,  direction = [-1 , 0], obstacle = '#', st
             unique_pos_count += 1
             lab_map[loc_i][loc_j] = step_marker
 
-        if look_ahead(lab_map, [loc_i + direction[0], loc_j + direction[1]]) == obstacle:
+        while look_ahead(lab_map, [loc_i + direction[0], loc_j + direction[1]]) == obstacle:
             rotate_right(direction)
 
         loc_i += direction[0]        
