@@ -1,12 +1,13 @@
 from utils import load_input, time_solution, InputType
-from typing import List, Tuple
+from typing import Tuple
+from collections import deque
 
 #This solution is highly unoptimised :(
 
-def read_disk(input_data:str) -> Tuple[List[str], List[str], List[int]]:
-    free_space_groups = []
-    file_blocks = []
-    file_groups = []
+def read_disk(input_data:str) -> Tuple[deque[str], deque[str], deque[int]]:
+    free_space_groups = deque()
+    file_blocks = deque()
+    file_groups = deque()
 
     file_id = 0
     space_index = 0
@@ -34,20 +35,16 @@ def solve(input_data: str) -> str:
     is_file = True
     while len(disk) < allocated_space_size:
         if is_file:
-            disk.extend(file_groups.pop(0))
+            disk.extend(file_groups.popleft())
         else:
-            for i in free_space_groups.pop(0):
+            for i in free_space_groups.popleft():
                 disk.append(file_blocks.pop())
         
         is_file = not is_file
     
     disk = disk[:allocated_space_size]
-
-    sum = 0
-    for i in range(allocated_space_size):
-        sum += i * int(disk[i])
-
-    return sum
+    
+    return sum(i * int(disk[i]) for i in range(allocated_space_size))
              
 if __name__ == "__main__":
     input_data = load_input(9, InputType.MAIN)
