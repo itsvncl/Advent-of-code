@@ -1,13 +1,5 @@
 from utils import load_input, time_solution, InputType
 
-class MagicStone:
-    value: int
-    level: int
-    left: 'MagicStone'
-    right: 'MagicStone'
-
-stone_cache = {}
-
 def blink(stones: list[int]) -> list[int]:
     new_stones = []
     for stone in stones:
